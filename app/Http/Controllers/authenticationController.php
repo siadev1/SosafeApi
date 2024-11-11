@@ -58,7 +58,7 @@ class authenticationController extends Controller
     }
 
     // Get authenticated user
-    public function getUser()
+    public function getUser(Request $request)
     {
         try {
             if (! $user = JWTAuth::parseToken()->authenticate()) {
@@ -68,7 +68,9 @@ class authenticationController extends Controller
             return response()->json(['error' => 'Invalid token'], 400);
         }
 
-        return response()->json(compact('user'));
+        // return response()->json(compact('user'));
+        // return response()->json(JWTAuth::user()->email);
+        return response()->json($request->user());
     }
 
     // User logout
