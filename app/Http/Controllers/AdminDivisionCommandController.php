@@ -7,10 +7,11 @@ use App\Models\soSafeCorpsBiodata;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
-class AdminZonalCommandController extends Controller{
+class AdminDivisionCommandController extends Controller
+{
     public function getSoSafeCorpsBiodata(){
         $area = JWTAuth::user()->Area;
-        $SoSafeCorpsBiodata = soSafeCorpsBiodata::where('za_command_id',$area)->with('ZonalArea')->get();
+        $SoSafeCorpsBiodata = soSafeCorpsBiodata::where('division_command_id',$area)->with('divisionArea')->get();
         return response()->json(['data'=>$SoSafeCorpsBiodata,'area'=>$area], 200);
     }
 
@@ -77,7 +78,4 @@ class AdminZonalCommandController extends Controller{
         "Message"=>"SoSafeCorpsBiodata with id {$id} not found"]);
     }
 }
-
-    
 }
-

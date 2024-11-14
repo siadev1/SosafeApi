@@ -9,6 +9,8 @@ use App\Http\Controllers\HeroController;
 use App\Http\Controllers\MissingWantedController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ZonalCommandController;
+use App\Http\Controllers\AdminZonalCommandController;
+use App\Http\Controllers\AdminDivisionCommandController;
 use App\Http\Controllers\DivisionCommandController;
 use App\Http\Controllers\SoSafeCorpsBiodataController;
 use App\Http\Controllers\CommunityController;
@@ -83,9 +85,17 @@ Route::middleware([JwtMiddleware::class],'role:admin')->group(function () {
     Route::get('biodata', [SosafeCorpsBiodataController::class, 'getBiodatas']);
 
 });
-
-Route::middleware([JwtMiddleware::class],'role:Zonal_command')->group(function(){
-    Route::get('/zonal/data',[ZonalCommandController::class, 'getSoSafeCorpsBiodata']);
-    Route::get('user', [ZonalCommandController::class, 'getUser']);
+//Admin Zonal Area Controller
+Route::middleware([JwtMiddleware::class,'role:Zonal_command'])->group(function(){
+    Route::get('/z/records',[AdminZonalCommandController::class, 'getSoSafeCorpsBiodata']);
+    Route::get('/z/record', [AdminZonalCommandController::class, 'getRecords']);
 });
+
+// Admin Division Controller
+
+Route::middleware([JwtMiddleware::class,'role:division_command'])->group(function(){
+    Route::get('/d/records',[AdminDivisionCommandController::class, 'getSoSafeCorpsBiodata']);
+    Route::get('/d/record', [AdminDivisionCommandController::class, 'getRecords']);
+});
+
 
